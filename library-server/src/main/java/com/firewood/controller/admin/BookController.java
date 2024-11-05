@@ -15,7 +15,6 @@ public class BookController {
     @Operation(summary = "获取图书列表")
     @GetMapping
     public String list(){
-
         return "Hello World";
     }
 }
