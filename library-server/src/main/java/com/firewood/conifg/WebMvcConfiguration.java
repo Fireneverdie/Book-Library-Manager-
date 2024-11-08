@@ -1,10 +1,13 @@
 package com.firewood.conifg;
 
+import com.firewood.interceptor.JwtTokenAdminInterceptor;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -12,6 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 @Slf4j
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
+
+    @Autowired
+    private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
 
     /**
      * 通过knife4j生成接口文档
@@ -32,5 +38,12 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         super.addResourceHandlers(registry);
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(jwtTokenAdminInterceptor)
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin/login");
     }
 }
