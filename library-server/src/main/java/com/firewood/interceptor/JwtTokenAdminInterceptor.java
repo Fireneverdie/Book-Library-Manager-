@@ -29,7 +29,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             log.info("jwt令牌校验:{}",token);
             Claims claims = JwtUtils.parseJWT(jwtProperties.getAdminSecretKey(),token);
 //            Long userId = Long.valueOf(claims.get("id").toString());
-            Long userId = claims.get("id", Long.class);
+            Integer userId = claims.get("id", Integer.class);
 //            Long userId = (Long)claims.get("id");
             log.info("当前的用户id为：{}",userId);
             //放行，获取用户id存储到threadLocal里

@@ -24,4 +24,7 @@ public interface TypeMapper {
     void delete(Integer id);
 
     void deleteBatch(List<Long> ids);
+
+    @Select("select id from type where type_name = #{typeName}")
+    Integer getTypeIdByTypeName(String typeName);
 }
