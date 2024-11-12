@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController("adminBookController")
 @RequestMapping("/admin/book")
 @Slf4j
 @Tag(name = "管理端图图书管理接口")
