@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.firewood.mapper.RecordMapper">
+
+
+    <select id="page" resultType="com.firewood.entity.Record">
+        select * from record
+        <where>
+            <if test="bookName != null and bookName != ''">
+                and book_name like = concat('%',#{bookName},'%')
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name like = concat('%',#{userName},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>
