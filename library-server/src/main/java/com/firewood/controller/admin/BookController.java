@@ -2,6 +2,7 @@ package com.firewood.controller.admin;
 
 import com.firewood.dto.BookDto;
 import com.firewood.dto.BookPageQueryDto;
+import com.firewood.entity.Book;
 import com.firewood.result.PageResult;
 import com.firewood.result.Result;
 import com.firewood.service.BookService;
@@ -57,7 +58,7 @@ public class BookController {
 
     @DeleteMapping
     @Operation(summary = "批量删除图书")
-    public Result deleteBatch(@RequestParam List<Long> ids){
+    public Result deleteBatch(@RequestParam List<Integer> ids){
         log.info("图书信息批量删除:{}",ids);
         bookService.deleteBatch(ids);
         return Result.success();
@@ -77,6 +78,15 @@ public class BookController {
         log.info("根据图书id获取图书详情：id为{}",id);
         BookVo bookVo = bookService.detail(id);
         return Result.success(bookVo);
+    }
+
+    @GetMapping("/typeId")
+    @Operation(summary = "根据类型id查找图书")
+    Result<List<Book>> findByTypeId(Integer typeId){
+        log.info("根据类型id获取图书详情：id为{}",typeId);
+        List<Book> bookList = bookService.findByTypeId(typeId);
+        return Result.success(bookList);
+
     }
 
 

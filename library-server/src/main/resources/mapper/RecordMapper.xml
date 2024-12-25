@@ -8,10 +8,16 @@
         select * from record
         <where>
             <if test="bookName != null and bookName != ''">
-                and book_name like = concat('%',#{bookName},'%')
+                and book_name like concat('%',#{bookName},'%')
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="bookId != null">
+                and book_id = #{bookId}
             </if>
             <if test="userName != null and userName != ''">
-                and user_name like = concat('%',#{userName},'%')
+                and user_name like concat('%',#{userName},'%')
             </if>
             <if test="status != null">
                 and status = #{status}

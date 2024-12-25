@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class RecordQueryDto {
     private Integer pageNum;
     private Integer pageSize;
+    private Integer userId;
+    private Integer bookId;
     private String userName;
     private String bookName;
     private Integer status;

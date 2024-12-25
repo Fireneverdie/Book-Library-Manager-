@@ -18,9 +18,12 @@ public interface BookMapper {
     @Delete("delete from book where id = #{id}")
     void delete(Integer id);
 
-    void deleteBatch(List<Long> ids);
+    void deleteBatch(List<Integer> ids);
     Page<Book> page(BookPageQueryDto bookPageQueryDto);
 
     @Select("select * from book where id = #{id}")
     Book detail(Integer id);
+
+    @Select("select * from book where type_id = #{typeId}")
+    List<Book> findByTypeId(Integer typeId);
 }

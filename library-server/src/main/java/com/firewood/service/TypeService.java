@@ -37,5 +37,5 @@ public interface TypeService {
      * @param ids
      * @return
      */
-    void deleteBatch(List<Long> ids);
+    void deleteBatch(List<Integer> ids);
 }

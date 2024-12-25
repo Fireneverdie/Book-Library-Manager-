@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Admin {
     private Integer id;
-    private String userName;
+    private String username;
     private String nickName;
     private String password;
 

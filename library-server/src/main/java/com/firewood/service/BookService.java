@@ -2,6 +2,7 @@ package com.firewood.service;
 
 import com.firewood.dto.BookDto;
 import com.firewood.dto.BookPageQueryDto;
+import com.firewood.entity.Book;
 import com.firewood.result.PageResult;
 import com.firewood.vo.BookVo;
 
@@ -30,7 +31,7 @@ public interface BookService {
      * 批量删除图书
      * @param ids
      */
-    void deleteBatch(List<Long> ids);
+    void deleteBatch(List<Integer> ids);
 
     /**
      * 图书分页查询
@@ -45,4 +46,6 @@ public interface BookService {
      * @return
      */
     BookVo detail(Integer id);
+
+    List<Book> findByTypeId(Integer typeId);
 }

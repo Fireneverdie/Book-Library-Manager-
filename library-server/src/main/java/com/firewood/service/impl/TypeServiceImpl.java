@@ -1,8 +1,12 @@
 package com.firewood.service.impl;
 
 import com.firewood.dto.TypeDto;
+import com.firewood.entity.Book;
 import com.firewood.entity.Type;
+import com.firewood.exception.TypeDeleteException;
+import com.firewood.mapper.BookMapper;
 import com.firewood.mapper.TypeMapper;
+import com.firewood.service.BookService;
 import com.firewood.service.TypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +15,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.firewood.constant.MessageConstant.TYPE_CANOT_DELETE;
+
 @Service
 public class TypeServiceImpl implements TypeService {
 
     @Autowired
     private TypeMapper typeMapper;
+
+    @Autowired
+    private BookMapper bookMapper;
     @Override
     public void add(TypeDto typeDto) {
         Type type = new Type();
@@ -59,8 +68,11 @@ public class TypeServiceImpl implements TypeService {
      * @param id
      */
     public void delete(Integer id) {
-        //TODO 先根据这个id查询图书信息，如果有图书是这个类型则不能删除这个类型
 
+        List<Book> bookList = bookMapper.findByTypeId(id);
+        if(!bookList.isEmpty() && bookList != null){
+            throw new TypeDeleteException(TYPE_CANOT_DELETE);
+        }
         typeMapper.delete(id);
     }
 
@@ -69,8 +81,13 @@ public class TypeServiceImpl implements TypeService {
      * @param ids
      * @return
      */
-    public void deleteBatch(List<Long> ids) {
-        //TODO 先根据这个id查询图书信息，如果有图书是这个类型则不能删除这个类型
+    public void deleteBatch(List<Integer> ids) {
+        for (Integer id : ids) {
+            List<Book> bookList = bookMapper.findByTypeId(id);
+            if(!bookList.isEmpty() && bookList != null){
+                throw new TypeDeleteException(TYPE_CANOT_DELETE);
+            }
+        }
         typeMapper.deleteBatch(ids);
     }
 }

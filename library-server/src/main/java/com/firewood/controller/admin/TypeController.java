@@ -74,7 +74,7 @@ public class TypeController {
      */
     @DeleteMapping
     @Operation(summary = "类型批量删除")
-    public Result delete(@RequestParam List<Long> ids){
+    public Result delete(@RequestParam List<Integer> ids){
         log.info("类型批量删除:{}",ids);
         typeService.deleteBatch(ids);
         return Result.success();

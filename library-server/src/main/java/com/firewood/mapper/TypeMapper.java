@@ -23,7 +23,7 @@ public interface TypeMapper {
     @Delete("delete from type where id = #{id}")
     void delete(Integer id);
 
-    void deleteBatch(List<Long> ids);
+    void deleteBatch(List<Integer> ids);
 
     @Select("select id from type where type_name = #{typeName}")
     Integer getTypeIdByTypeName(String typeName);

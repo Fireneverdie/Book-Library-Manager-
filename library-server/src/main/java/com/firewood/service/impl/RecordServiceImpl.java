@@ -7,6 +7,7 @@ import com.firewood.dto.RecordQueryDto;
 import com.firewood.entity.Book;
 import com.firewood.entity.Record;
 import com.firewood.entity.User;
+import com.firewood.exception.BookBrrowException;
 import com.firewood.exception.BookCacheException;
 import com.firewood.mapper.BookMapper;
 import com.firewood.mapper.RecordMapper;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class RecordServiceImpl implements RecordService {
@@ -38,6 +41,12 @@ public class RecordServiceImpl implements RecordService {
         //获取用户信息
         Integer userId = BaseContext.getCurrentId();
         User user = userMapper.getByID(userId);
+
+        //查看该本图书是否正在借阅，如果正在借阅，无法再借
+        //判断该本图书是否在借阅
+
+        boolean isReturned = judgeIsReturned(userId, bookId);
+        if(!isReturned) throw new BookBrrowException(MessageConstant.BOOK_NOT_RETURN);
 
         //查看库存
         Book book = bookMapper.detail(bookId);
@@ -82,5 +91,40 @@ public class RecordServiceImpl implements RecordService {
         PageHelper.startPage(recordQueryDto.getPageNum(),recordQueryDto.getPageSize());
         Page recordList = recordMapper.page(recordQueryDto);
         return new PageResult(recordList.getTotal(),recordList);
+    }
+
+    /**
+     * 借阅记录分页查询
+     * @param recordQueryDto
+     * @return
+     */
+    public List<Record> find(RecordQueryDto recordQueryDto) {
+        Page page = recordMapper.page(recordQueryDto);
+        List<Record> recordList = page.getResult();
+        return recordList;
+    }
+
+    //查看该本图书是否正在借阅，如果正在借阅，无法再借
+    //判断该本图书是否在借阅
+    //true已经归还，false表示未归还
+    private boolean judgeIsReturned(Integer userId,Integer bookId){
+        RecordQueryDto recordQueryDto = RecordQueryDto.builder()
+                .bookId(bookId)
+                .userId(userId)
+                .build();
+
+        Page page = recordMapper.page(recordQueryDto);
+        List<Record> recordList = page.getResult();
+        if (recordList != null && !recordList.isEmpty()) {
+            for (Record record : recordList) {
+                if(record.getStatus() == StatusConstant.ON_LOAN){
+                    //表示未归还
+                    return false;
+                }
+            }
+        }
+        //false表示已经归还
+        return true;
+
     }
 }

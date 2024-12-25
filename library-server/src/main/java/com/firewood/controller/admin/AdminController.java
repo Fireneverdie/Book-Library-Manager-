@@ -41,7 +41,7 @@ public class AdminController {
         log.info("管理员登录：{}",adminLoginDto);
 
         //根据用户名查询数据库，查看登录的账号是否存在
-        Admin user = adminService.getByUserName(adminLoginDto.getUserName());
+        Admin user = adminService.getByUserName(adminLoginDto.getUsername());
         if (user != null) {
             //存在，交给service判断密码是否正确
             if(!user.getPassword().equals(adminLoginDto.getPassword())){
@@ -54,7 +54,7 @@ public class AdminController {
         //封装管理员信息生成jwt令牌
         Map<String,Object> claims = new HashMap<>();
         claims.put("id",user.getId());
-        claims.put("name",user.getUserName());
+        claims.put("name",user.getUsername());
         claims.put("nickName",user.getNickName());
 
         String token = JwtUtils.createJWT(
