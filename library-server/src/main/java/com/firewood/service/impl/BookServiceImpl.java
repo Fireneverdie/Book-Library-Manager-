@@ -16,6 +16,7 @@ import com.firewood.mapper.BookMapper;
 import com.firewood.mapper.RecordMapper;
 import com.firewood.mapper.TypeMapper;
 import com.firewood.result.PageResult;
+import com.firewood.result.Result;
 import com.firewood.service.BookService;
 import com.firewood.vo.BookVo;
 import com.github.pagehelper.Page;
@@ -96,8 +97,7 @@ public class BookServiceImpl implements BookService {
      */
     public void delete(Integer id) {
         //等完成图书借阅接口后再完善代码
-        //TODO 如果改本图书有人借阅，则不能删
-
+        //如果改本图书有人借阅，则不能删
         if(!judgeIsReturned(id)) throw new BookDeleteException(BOOK_CANOT_DELETE);
         bookMapper.delete(id);
     }
@@ -107,7 +107,7 @@ public class BookServiceImpl implements BookService {
      * @param ids
      */
     public void deleteBatch(List<Integer> ids) {
-        //等完成图书借阅接口后再完善代码
+        //如果改本图书有人借阅，则不能删
         for (Integer id : ids) {
             if(!judgeIsReturned(id)) throw new BookDeleteException(BOOK_CANOT_DELETE);
         }
@@ -155,6 +155,12 @@ public class BookServiceImpl implements BookService {
     public List<Book> findByTypeId(Integer typeId) {
         return bookMapper.findByTypeId(typeId);
     }
+
+    @Override
+    public List<Book> list() {
+        return bookMapper.list();
+    }
+
 
     //将book对象封装成BookVo返回
     private BookVo change(Book book){

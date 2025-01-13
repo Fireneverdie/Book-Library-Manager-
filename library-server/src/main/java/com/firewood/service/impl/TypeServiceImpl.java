@@ -90,4 +90,9 @@ public class TypeServiceImpl implements TypeService {
         }
         typeMapper.deleteBatch(ids);
     }
+
+    @Override
+    public List<Type> list() {
+        return typeMapper.list();
+    }
 }

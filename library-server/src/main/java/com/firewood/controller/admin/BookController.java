@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController("adminBookController")
@@ -27,8 +28,9 @@ public class BookController {
 
     @Operation(summary = "获取图书列表")
     @GetMapping
-    public String list(){
-        return "Hello World";
+    public Result<List<Book>> list(){
+        List<Book> list = bookService.list();
+        return Result.success(list);
     }
 
     @PostMapping

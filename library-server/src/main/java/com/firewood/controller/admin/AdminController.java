@@ -62,7 +62,6 @@ public class AdminController {
                 jwtProperties.getAdminTtl(),
                 claims);
 
-
         return Result.success(token);
     }
 }

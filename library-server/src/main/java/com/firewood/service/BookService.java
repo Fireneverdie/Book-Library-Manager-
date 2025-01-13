@@ -4,6 +4,7 @@ import com.firewood.dto.BookDto;
 import com.firewood.dto.BookPageQueryDto;
 import com.firewood.entity.Book;
 import com.firewood.result.PageResult;
+import com.firewood.result.Result;
 import com.firewood.vo.BookVo;
 
 import java.util.List;
@@ -48,4 +49,10 @@ public interface BookService {
     BookVo detail(Integer id);
 
     List<Book> findByTypeId(Integer typeId);
+
+    /**
+     * 获取所有图书信息
+     * @return
+     */
+    List<Book> list();
 }

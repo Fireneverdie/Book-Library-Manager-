@@ -26,4 +26,7 @@ public interface BookMapper {
 
     @Select("select * from book where type_id = #{typeId}")
     List<Book> findByTypeId(Integer typeId);
+
+    @Select("select * from book")
+    List<Book> list();
 }

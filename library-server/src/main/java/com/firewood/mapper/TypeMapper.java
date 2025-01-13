@@ -27,4 +27,7 @@ public interface TypeMapper {
 
     @Select("select id from type where type_name = #{typeName}")
     Integer getTypeIdByTypeName(String typeName);
+    @Select("select * from type")
+
+    List<Type> list();
 }

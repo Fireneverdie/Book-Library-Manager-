@@ -1,6 +1,7 @@
 package com.firewood.service;
 
 import com.firewood.dto.TypeDto;
+import com.firewood.entity.Type;
 
 import java.util.List;
 
@@ -38,4 +39,11 @@ public interface TypeService {
      * @return
      */
     void deleteBatch(List<Integer> ids);
+
+    /**
+     * 获取所有类型信息
+     *
+     * @return
+     */
+    List<Type> list();
 }

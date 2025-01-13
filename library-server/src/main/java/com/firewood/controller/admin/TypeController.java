@@ -1,6 +1,7 @@
 package com.firewood.controller.admin;
 
 import com.firewood.dto.TypeDto;
+import com.firewood.entity.Type;
 import com.firewood.result.Result;
 import com.firewood.service.TypeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +22,15 @@ public class TypeController {
 
     @Autowired
     private TypeService typeService;
+
+    @GetMapping
+    @Operation(summary = "获取所有类型信息")
+    public Result<List<Type>> list(){
+        log.info("获取所有类型信息...");
+        List<Type> list = typeService.list();
+        return Result.success(list);
+    }
+
 
     @PostMapping
     @Operation(summary = "新增类型")

@@ -44,7 +44,6 @@ public class RecordServiceImpl implements RecordService {
 
         //查看该本图书是否正在借阅，如果正在借阅，无法再借
         //判断该本图书是否在借阅
-
         boolean isReturned = judgeIsReturned(userId, bookId);
         if(!isReturned) throw new BookBrrowException(MessageConstant.BOOK_NOT_RETURN);
 
